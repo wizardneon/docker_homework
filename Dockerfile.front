@@ -9,8 +9,7 @@ RUN export CI=true && \
 
 COPY frontend ./
 
-ENV HOST=${HOST}
-
+#ENV HOST=${HOST}
 #RUN sed -i 's/localhost:8000/HOST:8000/g' src/*Api.js && \
 # sed -i 's/localhost:8000/HOST:8000/g' src/*API.js
 
