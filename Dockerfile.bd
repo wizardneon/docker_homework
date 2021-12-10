@@ -1,0 +1,4 @@
+FROM postgres:alpine
+
+
+HEALTHCHECK --interval=10s --timeout=5s --retries=3 CMD /usr/local/bin/pg_isready --username=django || exit 1

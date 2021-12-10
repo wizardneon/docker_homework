@@ -1,18 +1,42 @@
-# docker_homework
-# 1 Лекция
-Написать Dockerfile для frontend располагается в директории /frontend, собрать и запустить
-# 2 Лекция
-Написать Dockerfile для backend который располагается в директории /lib_catalog(для сборки контейнера необходимо использовать файл /lib_catalog/requirements.txt), для работы backend необходим postgresql, т.е. необходимо собрать 2 контейнера:
-1. backend
-2. postgresql
+# docker_homework Проверять только на том же хосте где запушены все контейнеры.
+# 1 Лекция команды:
+docker build -t front:v1 .
+docker run -p 80:80 -d ID
+# 2 Лекция команды :
+# создание образов
+docker build -f Dockerfile.front -t front .
+docker build -f Dockerfile.bd -t database .
+docker build -f Dockerfile.back -t back .
 
-Осуществить сетевые настройки, для работы связки backend и postgresql
+#    Запуск образов
+#  Обратите внимание что все докеры и композ имеют переменные  в env.list и запускаются с применением файла переменных.
+ 
+docker network create backend
+
+docker run --network=backend --name database \
+--env-file ./env.list -d database
+
+docker run --network=backend --name back -p 8000:8000 \
+--env-file ./env.list  -d back
+
+docker run --network=backend --name front -it --env-file ./env.list \
+-p 80:80 -d front
+
 # 3 Лекция
-Написать docker-compose.yaml, для всего проекта, собрать и запустить
+docker-compose up -d
 
-# Критерий оценки финального задания
-1. Dockerfile должны быть написаны согласно пройденным best practices
-2. Для docker-compose необходимо использовать локальное image registry
-3. В docker-compose необходимо сетевые настройки 2 разных интерфейса(bridge), 1 - для фронта, 2 - для бека с postgresql
+# Вспомогательные при дебаге
 
-4.* Осущиствить сборку проекта самим docker-compose команда docker-compose build(при использовании этого подхода необходимо исключить 2 пункт из критерии оценки)
+docker image rm $(docker images -a -q)
+docker stop id
+docker rm id id id
+docket ps
+docker images
+docker exec -it id sh
+docker logs id
+docker inspect id
+docker port id
+systemctl start docker
+docker rmi -f id
+docker image rmi -f id
+docker-compose up -d
