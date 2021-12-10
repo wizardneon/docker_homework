@@ -1,6 +1,6 @@
 # docker_homework Проверять только на том же хосте где запушены все контейнеры.
 # 1 Лекция команды:
-docker build -t front:v1 .
+docker build -f Dockerfile.front -t front .
 docker run -p 80:80 -d ID
 # 2 Лекция команды :
 # создание образов
